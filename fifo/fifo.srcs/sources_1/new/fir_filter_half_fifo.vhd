@@ -103,6 +103,7 @@ begin
         else
             if (run = '0') then
                 -- fetch logic
+                output_fifo_write_enable <= '0';
                 if (input_fifo_empty = '0') then
                     -- We don't need a prework state register here, since we preload
                     -- a zero into current at reset time.
@@ -116,15 +117,15 @@ begin
                 
                 -- calculation logic
                 if (output_fifo_full = '0') then
-                    output_fifo_write_enable <= '1';
-
                     -- Calculation completes in two cycles (pipelined)
                     -- TODO: Can we reduce this to one?
                     if (add_cycle = false) then
+                        output_fifo_write_enable <= '0';
                         mul_lhs := rcc_taps_lhs(j) * current(31 downto 10);
                         mul_rhs := rcc_taps_rhs(j) * previous(31 downto 10);
                         add_cycle := true;
                     else
+                        output_fifo_write_enable <= '1';
                         output_fifo_data_in <= mul_lhs(41 downto 10) + mul_rhs(41 downto 10);
                         add_cycle := false;
                         
