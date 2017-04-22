@@ -19,6 +19,7 @@ architecture Behavioral of chunk2symbol_fifo is
 signal input_fifo_read_enable : std_logic;
 signal input_fifo_data_out : std_logic_vector(0 downto 0);
 signal input_fifo_empty : std_logic;
+signal pop : std_logic;
 signal run : std_logic;
 
 begin
@@ -52,6 +53,10 @@ begin
                 
                 -- Space for output and we have input? 
                 if (input_fifo_empty = '0' and output_fifo_full = '0') then
+                    -- This copy could be optional, since the output fifo is guaranteed to be
+                    -- empty, so the calculation will always happen in the next cycle. But if
+                    -- it wasn't, the value on the read port would be moved already.
+                    pop <= input_fifo_data_out(0); 
                     input_fifo_read_enable <= '1';
                     run <= '1';
                 else
@@ -63,7 +68,7 @@ begin
                 
                 -- Set WE, since we're going to output data.    
                 output_fifo_write_enable <= '1';
-                if (input_fifo_data_out(0) = '0') then
+                if (pop = '0') then
                     output_fifo_data_in <= std_logic_vector(to_signed(741343, 32));
                 else
                     output_fifo_data_in <= std_logic_vector(to_signed(-741343, 32));

@@ -40,40 +40,17 @@ end diff_encode_fifo;
 
 architecture Behavioral of diff_encode_fifo is
 
-component fifo is
-    generic (
-        constant DATA_WIDTH : positive := 8;
-        constant SIZE : positive := 10
-    );
-    port (
-        clk : in std_logic;
-        reset: in std_logic;
-        write_enable : in std_logic;
-        read_enable : in std_logic;
-        is_empty : out std_logic;
-        is_full : out std_logic;
-        data_in : in std_logic_vector(DATA_WIDTH - 1 downto 0);
-        data_out : out std_logic_vector(DATA_WIDTH - 1 downto 0)
-    );
-end component;
-
 signal input_fifo_read_enable : std_logic;
 signal input_fifo_data_out : std_logic_vector(0 downto 0);
 signal input_fifo_empty : std_logic;        
 
 signal pop : std_logic;
 signal last_out : std_logic;
---signal input_value : std_logic;
---signal output_value : std_logic;
-signal has_value : std_logic;
-signal has_value_store : std_logic;
-signal has_output_value : std_logic;
+signal run : std_logic;
 
 begin
 
---input_value <= input_fifo_data_out(0);
-
-input_fifo : fifo
+input_fifo : entity work.fifo(Behavioral)
     generic map (
         DATA_WIDTH => 1
     )
@@ -88,53 +65,44 @@ input_fifo : fifo
         is_full => input_fifo_full
     );
 
-read_from_fifo : process (clk)
+main : process (clk)
+    variable tmp : std_logic;
 begin
     if (rising_edge(clk)) then
         if (reset = '1') then
-            has_value_store <= '0';
-            --output_value <= '0';
-        else
-            has_value <= has_value_store;
-            if (input_fifo_empty = '0') and (output_fifo_full = '0') then
-                has_value_store <= '1';
-                input_fifo_read_enable <= '1';
-                pop <= input_fifo_data_out(0);
-            else
-                has_value_store <= '0';
-                input_fifo_read_enable <= '0';
-            end if;
-        end if;
-    end if;
-end process;
-
-write_to_fifo : process (clk)
-begin
-    if (rising_edge(clk)) then
-        if (reset = '1') then
+            input_fifo_read_enable <= '0';
             output_fifo_write_enable <= '0';
-        else
-            if (has_output_value = '1') then
-                output_fifo_write_enable <= '1';
-                output_fifo_data_in(0) <= last_out;
-            else
-                output_fifo_write_enable <= '0';
-            end if;
-        end if;
-    end if;
-end process;
-
-main_work : process (clk)
-begin
-    if (rising_edge(clk)) then
-        if (reset = '1') then
             last_out <= '0';
+            run <= '0';
         else
-            if (has_value = '1') then
-                last_out <= last_out xor pop;
-                has_output_value <= '1';
+            if (run = '0') then
+                -- No longer writing data.
+                output_fifo_write_enable <= '0';
+                
+                -- Space for output and we have input? 
+                if (input_fifo_empty = '0' and output_fifo_full = '0') then
+                    -- This copy could be optional, since the output fifo is guaranteed to be
+                    -- empty, so the calculation will always happen in the next cycle. But if
+                    -- it wasn't, the value on the read port would be moved already.
+                    pop <= input_fifo_data_out(0); 
+                    input_fifo_read_enable <= '1';
+                    run <= '1';
+                else
+                    input_fifo_read_enable <= '0';
+                end if;
             else
-                has_output_value <= '0';
+                -- Clear RE, since we have data now. 
+                input_fifo_read_enable <= '0';      
+                
+                -- Set WE, since we're going to output data.    
+                output_fifo_write_enable <= '1';
+                
+                tmp := last_out xor pop;
+                last_out <= tmp;
+                output_fifo_data_in(0) <= tmp;
+                
+                -- Read from the fifo next cycle.
+                run <= '0';
             end if;
         end if;
     end if;
