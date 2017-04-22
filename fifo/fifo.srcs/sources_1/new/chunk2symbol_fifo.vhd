@@ -19,10 +19,7 @@ architecture Behavioral of chunk2symbol_fifo is
 signal input_fifo_read_enable : std_logic;
 signal input_fifo_data_out : std_logic_vector(0 downto 0);
 signal input_fifo_empty : std_logic;
-
-signal read_enable_delay : std_logic;
-signal pop : std_logic;
-signal has_value_store : std_logic;
+signal run : std_logic;
 
 begin
 
@@ -43,23 +40,38 @@ input_fifo : entity work.fifo(Behavioral)
 
 main : process(clk)
 begin
-    if (reset = '1') then
-        input_fifo_read_enable <= '0';
-        output_fifo_write_enable <= '0';
-    else
-        -- input_fifo_read_enable will stay high for one extra cycle here
-        -- the fifo protects its pointers against this, but we should try to improve things.
-        if (input_fifo_empty = '0' and output_fifo_full = '0') then
-            input_fifo_read_enable <= '1';
-            output_fifo_write_enable <= '1';
-            if (input_fifo_data_out(0) = '0') then
-                output_fifo_data_in <= std_logic_vector(to_signed(741343, 32));
-            else
-                output_fifo_data_in <= std_logic_vector(to_signed(-741343, 32));
-            end if;
-        else
+    if (rising_edge(clk)) then
+        if (reset = '1') then
             input_fifo_read_enable <= '0';
             output_fifo_write_enable <= '0';
+            run <= '0';
+        else
+            if (run = '0') then
+                -- No longer writing data.
+                output_fifo_write_enable <= '0';
+                
+                -- Space for output and we have input? 
+                if (input_fifo_empty = '0' and output_fifo_full = '0') then
+                    input_fifo_read_enable <= '1';
+                    run <= '1';
+                else
+                    input_fifo_read_enable <= '0';
+                end if;
+            else
+                -- Clear RE, since we have data now. 
+                input_fifo_read_enable <= '0';      
+                
+                -- Set WE, since we're going to output data.    
+                output_fifo_write_enable <= '1';
+                if (input_fifo_data_out(0) = '0') then
+                    output_fifo_data_in <= std_logic_vector(to_signed(741343, 32));
+                else
+                    output_fifo_data_in <= std_logic_vector(to_signed(-741343, 32));
+                end if;
+                
+                -- Read from the fifo next cycle.
+                run <= '0';
+            end if;
         end if;
     end if;
 end process;            
