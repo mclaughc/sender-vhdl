@@ -71,7 +71,7 @@ begin
         else
             if (read_enable = '1') then
                 if ((looped = true) or (head_ptr /= tail_ptr)) then
-                    data_out <= Memory(tail_ptr);
+                    --data_out <= Memory(tail_ptr);
                     if (tail_ptr = SIZE - 1) then
                         tail_ptr := 0;
                         looped := false;
@@ -92,6 +92,8 @@ begin
                     end if;
                 end if;
             end if;
+            
+            data_out <= Memory(tail_ptr);
             
             -- TODO: Make combinational logic?
             if (head_ptr = tail_ptr) then
