@@ -15,23 +15,6 @@ end scramble_fifo;
 
 architecture Behavioral of scramble_fifo is
 
-component fifo is
-    generic (
-        constant DATA_WIDTH : positive := 8;
-        constant SIZE : positive := 16
-    );
-    port (
-        clk : in std_logic;
-        reset: in std_logic;
-        write_enable : in std_logic;
-        read_enable : in std_logic;
-        is_empty : out std_logic;
-        is_full : out std_logic;
-        data_in : in std_logic_vector(DATA_WIDTH - 1 downto 0);
-        data_out : out std_logic_vector(DATA_WIDTH - 1 downto 0)
-    );
-end component;
-
 signal input_fifo_read_enable : std_logic;
 signal input_fifo_data_out : std_logic_vector(7 downto 0);
 signal input_fifo_empty : std_logic;
@@ -42,7 +25,7 @@ signal has_input_value : std_logic;
 
 begin
 
-input_fifo : fifo
+input_fifo : entity work.fifo(Behavioral)
     generic map (
         DATA_WIDTH => 8
     )

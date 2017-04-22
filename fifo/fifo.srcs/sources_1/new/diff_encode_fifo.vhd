@@ -61,6 +61,7 @@ signal input_fifo_read_enable : std_logic;
 signal input_fifo_data_out : std_logic_vector(0 downto 0);
 signal input_fifo_empty : std_logic;        
 
+signal pop : std_logic;
 signal last_out : std_logic;
 --signal input_value : std_logic;
 --signal output_value : std_logic;
@@ -98,6 +99,7 @@ begin
             if (input_fifo_empty = '0') and (output_fifo_full = '0') then
                 has_value_store <= '1';
                 input_fifo_read_enable <= '1';
+                pop <= input_fifo_data_out(0);
             else
                 has_value_store <= '0';
                 input_fifo_read_enable <= '0';
@@ -127,19 +129,11 @@ begin
     if (rising_edge(clk)) then
         if (reset = '1') then
             last_out <= '0';
-            --output_value <= '0';
         else
             if (has_value = '1') then
-                --last_out <= last_out xor input_fifo_data_in(0);
-                --output_value <= last_out;
-                --output_fifo_write_enable <= '1';
-                --output_fifo_data_in(0) <= last_out xor input_value;
-                --last_out <= last_out xor input_value;
-                --output_fifo_data_in(0) <= last_out xor input_fifo_data_out(0);
-                last_out <= last_out xor input_fifo_data_out(0);
+                last_out <= last_out xor pop;
                 has_output_value <= '1';
             else
-                --output_fifo_write_enable <= '0';
                 has_output_value <= '0';
             end if;
         end if;
