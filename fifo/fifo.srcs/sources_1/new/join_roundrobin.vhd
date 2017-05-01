@@ -73,7 +73,7 @@ filter2_fifo : entity work.fifo(Behavioral)
 join : process(clk)
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             join_flipflop <= '0';
             input1_fifo_read_enable <= '0';
             input2_fifo_read_enable <= '0';

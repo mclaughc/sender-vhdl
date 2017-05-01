@@ -29,7 +29,7 @@ end sender_80211_tb;
 architecture Behavioral of sender_80211_tb is
 
 signal clk : std_logic := '0';
-signal reset : std_logic := '1';
+signal reset : std_logic := '0';
 
 signal input_fifo_data_in : std_logic_vector(7 downto 0);
 signal input_fifo_write_enable : std_logic;
@@ -73,10 +73,10 @@ end process;
 
 main : process is
 begin
-    reset <= '1';
+    reset <= '0';
     wait for 1ns;
     
-    reset <= '0';
+    reset <= '1';
     
     input_fifo_data_in <= x"48";
     input_fifo_write_enable <= '1';

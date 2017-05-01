@@ -93,7 +93,7 @@ main : process(clk)
     variable mul_rhs : std_logic_vector(41 downto 0);
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             input_fifo_read_enable <= '0';
             output_fifo_write_enable <= '0';
             current <= std_logic_vector(to_signed(0, 32));

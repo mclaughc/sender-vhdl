@@ -55,7 +55,7 @@ component fifo is
 end component;
 
 signal clk : std_logic := '0';
-signal reset : std_logic := '1';
+signal reset : std_logic := '0';
 signal read_enable : std_logic := '0';
 signal write_enable : std_logic := '0';
 signal is_empty : std_logic := '0';
@@ -86,7 +86,7 @@ end process;
 main : process
 begin
     wait for 1ns;
-    reset <= '0';
+    reset <= '1';
     
     write_enable <= '1';
     data_in <= "01010101";

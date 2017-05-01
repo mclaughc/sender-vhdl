@@ -54,7 +54,7 @@ main_proc : process(clk)
     
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             output_write_enable <= '0';
         else
             if (output_full = '0' and enabled = '1') then

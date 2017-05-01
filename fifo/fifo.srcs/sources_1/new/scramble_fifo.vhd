@@ -44,7 +44,7 @@ main : process(reset, clk)
     variable j : natural range 0 to 7;
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             shift <= "0011011";
             j := 0;
             has_input_value <= '0';

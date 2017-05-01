@@ -118,7 +118,7 @@ split : process(clk)
     variable do_write : boolean; -- this could be a signal 
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             input_fifo_read_enable <= '0';
             filter1_in_fifo_write_enable <= '0';
             filter2_in_fifo_write_enable <= '0';

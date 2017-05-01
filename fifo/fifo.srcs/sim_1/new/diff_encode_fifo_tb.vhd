@@ -53,7 +53,7 @@ component fifo_sink is
 end component;
 
 signal clk : std_logic := '0';
-signal reset : std_logic := '1';
+signal reset : std_logic := '0';
 
 signal diff_encode_input_fifo_data_in : std_logic_vector(0 downto 0);
 signal diff_encode_input_fifo_write_enable : std_logic;
@@ -97,10 +97,10 @@ end process;
 
 main : process is
 begin
-    reset <= '1';
+    reset <= '0';
     wait for 1ns;
     
-    reset <= '0';
+    reset <= '1';
     diff_encode_input_fifo_data_in(0) <= '0';
     diff_encode_input_fifo_write_enable <= '1';
     wait for 1ns;

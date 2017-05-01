@@ -49,7 +49,7 @@ input_fifo : entity work.fifo(Behavioral)
 split : process(clk)
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             input_fifo_read_enable <= '0';
             output1_fifo_write_enable <= '0';
             output2_fifo_write_enable <= '0';

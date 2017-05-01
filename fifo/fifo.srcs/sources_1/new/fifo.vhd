@@ -62,7 +62,7 @@ main_proc : process(clk)
     
 begin
     if (rising_edge(clk)) then
-        if (reset = '1') then
+        if (reset = '0') then
             head_ptr := 0;
             tail_ptr := 0;
             looped := false;

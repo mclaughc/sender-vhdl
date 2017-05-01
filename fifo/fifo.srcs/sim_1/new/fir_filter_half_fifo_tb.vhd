@@ -28,7 +28,7 @@ end fir_filter_half_fifo_tb;
 architecture Behavioral of fir_filter_half_fifo_tb is
 
 signal clk : std_logic := '0';
-signal reset : std_logic := '1';
+signal reset : std_logic := '0';
 
 signal fir_filter_half_input_fifo_data_in : std_logic_vector(31 downto 0);
 signal fir_filter_half_input_fifo_write_enable : std_logic;
@@ -72,10 +72,10 @@ end process;
 
 main : process is
 begin
-    reset <= '1';
+    reset <= '0';
     wait for 1ns;
     
-    reset <= '0';
+    reset <= '1';
     fir_filter_half_input_fifo_data_in <= std_logic_vector(to_signed(741343, 32));
     fir_filter_half_input_fifo_write_enable <= '1';
     wait for 1ns;
