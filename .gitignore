@@ -1,3 +1,11 @@
 *.cache/
 *.runs/
 *.sim/
+*.tmp/
+*.ip_user_files/
+.metadata/
+.sdk/
+*.bit
+*.dcp
+*.elf
+*.hdf
