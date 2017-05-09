@@ -1,10 +1,10 @@
 // Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
-// Date        : Mon May 01 19:03:23 2017
-// Host        : DESKTOP-D2EE9IH running 64-bit major release  (build 9200)
+// Date        : Tue May 09 15:12:18 2017
+// Host        : DESKTOP-86PAM23 running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
-//               c:/Repositories/sender-vhdl/sender_helloworld/sender_helloworld.srcs/sources_1/bd/system/ip/system_lmb_bram_0/system_lmb_bram_0_stub.v
+//               C:/Repositories/sender-vhdl/sender_helloworld/sender_helloworld.srcs/sources_1/bd/system/ip/system_lmb_bram_0/system_lmb_bram_0_stub.v
 // Design      : system_lmb_bram_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35ticsg324-1L

@@ -1,10 +1,10 @@
 // Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
-// Date        : Mon May 01 19:03:09 2017
-// Host        : DESKTOP-D2EE9IH running 64-bit major release  (build 9200)
+// Date        : Tue May 09 15:04:41 2017
+// Host        : DESKTOP-86PAM23 running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
-//               c:/Repositories/sender-vhdl/sender_helloworld/sender_helloworld.srcs/sources_1/bd/system/ip/system_microblaze_0_0/system_microblaze_0_0_stub.v
+//               C:/Repositories/sender-vhdl/sender_helloworld/sender_helloworld.srcs/sources_1/bd/system/ip/system_microblaze_0_0/system_microblaze_0_0_stub.v
 // Design      : system_microblaze_0_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7a35ticsg324-1L

@@ -1,8 +1,8 @@
 // Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
-// Date        : Mon May 01 19:04:03 2017
-// Host        : DESKTOP-D2EE9IH running 64-bit major release  (build 9200)
+// Date        : Tue May 09 15:17:30 2017
+// Host        : DESKTOP-86PAM23 running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim -rename_top system_auto_us_0 -prefix
 //               system_auto_us_0_ system_auto_us_0_sim_netlist.v
 // Design      : system_auto_us_0

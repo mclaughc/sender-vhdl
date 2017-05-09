@@ -1,11 +1,11 @@
 -- Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2016.4 (win64) Build 1733598 Wed Dec 14 22:35:39 MST 2016
--- Date        : Mon May 01 19:01:40 2017
--- Host        : DESKTOP-D2EE9IH running 64-bit major release  (build 9200)
--- Command     : write_vhdl -force -mode funcsim
---               c:/Repositories/sender-vhdl/sender_helloworld/sender_helloworld.srcs/sources_1/bd/system/ip/system_dlmb_v10_0/system_dlmb_v10_0_sim_netlist.vhdl
--- Design      : system_dlmb_v10_0
+-- Date        : Tue May 09 15:01:03 2017
+-- Host        : DESKTOP-86PAM23 running 64-bit major release  (build 9200)
+-- Command     : write_vhdl -force -mode funcsim -rename_top system_dlmb_v10_0 -prefix
+--               system_dlmb_v10_0_ system_ilmb_v10_0_sim_netlist.vhdl
+-- Design      : system_ilmb_v10_0
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
 -- Device      : xc7a35ticsg324-1L
@@ -50,8 +50,6 @@ entity system_dlmb_v10_0_lmb_v10 is
   attribute C_LMB_DWIDTH of system_dlmb_v10_0_lmb_v10 : entity is 32;
   attribute C_LMB_NUM_SLAVES : integer;
   attribute C_LMB_NUM_SLAVES of system_dlmb_v10_0_lmb_v10 : entity is 1;
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of system_dlmb_v10_0_lmb_v10 : entity is "lmb_v10";
 end system_dlmb_v10_0_lmb_v10;
 
 architecture STRUCTURE of system_dlmb_v10_0_lmb_v10 is
@@ -140,7 +138,7 @@ entity system_dlmb_v10_0 is
   attribute NotValidForBitStream : boolean;
   attribute NotValidForBitStream of system_dlmb_v10_0 : entity is true;
   attribute CHECK_LICENSE_TYPE : string;
-  attribute CHECK_LICENSE_TYPE of system_dlmb_v10_0 : entity is "system_dlmb_v10_0,lmb_v10,{}";
+  attribute CHECK_LICENSE_TYPE of system_dlmb_v10_0 : entity is "system_ilmb_v10_0,lmb_v10,{}";
   attribute downgradeipidentifiedwarnings : string;
   attribute downgradeipidentifiedwarnings of system_dlmb_v10_0 : entity is "yes";
   attribute x_core_info : string;
