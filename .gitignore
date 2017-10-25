@@ -9,3 +9,6 @@
 *.dcp
 *.elf
 *.hdf
+*.jou
+vivado*.log
+vivado_pid*.str

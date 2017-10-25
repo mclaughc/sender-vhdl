@@ -34,7 +34,7 @@ signal clk : std_logic := '0';
 signal rst_n : std_logic := '0';
 signal runsim : boolean := true;
 
-signal input_din : std_logic_vector(31 downto 0);
+signal input_din : std_logic_vector(7 downto 0);
 signal input_write : std_logic;
 signal input_full_n : std_logic;
 
@@ -98,34 +98,34 @@ input_generator : process
 begin
   if (runsim) then
     input_write <= '0';
-    input_din <= std_logic_vector(to_signed(0, 32));
+    input_din <= std_logic_vector(to_signed(0, 8));
     wait until rst_n = '1';
     if (input_full_n = '0') then
       wait until input_full_n = '1';
     end if;
     input_write <= '1';
-    input_din <= std_logic_vector(to_signed(0, 32));
+    input_din <= std_logic_vector(to_signed(1, 8));
     wait for CLK_PERIOD;
     input_write <= '0';
     if (input_full_n = '0') then
       wait until input_full_n = '1';
     end if;
     input_write <= '1';
-    input_din <= std_logic_vector(to_signed(1, 32));
+    input_din <= std_logic_vector(to_signed(2, 8));
     wait for CLK_PERIOD;
     input_write <= '0';
     if (input_full_n = '0') then
       wait until input_full_n = '1';
     end if;
     input_write <= '1';
-    input_din <= std_logic_vector(to_signed(2, 32));
+    input_din <= std_logic_vector(to_signed(3, 8));
     wait for CLK_PERIOD;
     input_write <= '0';
     if (input_full_n = '0') then
       wait until input_full_n = '1';
     end if;
     input_write <= '1';
-    input_din <= std_logic_vector(to_signed(3, 32));
+    input_din <= std_logic_vector(to_signed(4, 8));
     wait for CLK_PERIOD;
     input_write <= '0';
   else

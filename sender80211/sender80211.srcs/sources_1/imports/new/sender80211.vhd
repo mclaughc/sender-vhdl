@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity sender80211 is
   Port ( clk : in std_logic;
    rst_n : in std_logic;
-   input_din : in std_logic_vector(31 downto 0);
+   input_din : in std_logic_vector(7 downto 0);
    input_write : in std_logic;
    input_full_n : out std_logic;
    output_din : out std_logic_vector(63 downto 0);      -- push
@@ -94,7 +94,7 @@ fir_filter_comp : entity work.fir_filter(behav)
     
 
 -- input -> scramble
-scramble_input_din <= input_din(7 downto 0);
+scramble_input_din <= input_din;
 scramble_input_write <= input_write;
 input_full_n <= scramble_input_full_n;
 
