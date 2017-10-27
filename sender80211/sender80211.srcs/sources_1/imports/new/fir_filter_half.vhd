@@ -76,6 +76,10 @@ signal previous : std_logic_vector(31 downto 0);
 signal previous_reg : std_logic_vector(31 downto 0);
 signal has_previous : boolean;
 
+signal mul_lhs : std_logic_vector(41 downto 0);
+signal mul_rhs : std_logic_vector(41 downto 0);
+signal mul_valid : boolean;
+
 signal current : std_logic_vector(31 downto 0);
 signal current_reg : std_logic_vector(31 downto 0);
 
@@ -168,13 +172,26 @@ begin
   end if;
 end process;
 
+mul_valid_assign : process(clk)
+begin
+  if (rising_edge(clk)) then
+    mul_lhs <= (rcc_taps_lhs(output_index) * current(31 downto 10));
+    mul_rhs <= (rcc_taps_rhs(output_index) * previous(31 downto 10));
+    if (rst_n = '0') then
+      mul_valid <= false;
+    else
+      if (is_ready and has_previous) then
+        mul_valid <= true;
+      else
+        mul_valid <= false;
+      end if;
+    end if;
+  end if;
+end process;
+
 next_output_assign : process(output_index, previous, current)
-  variable mul_lhs : std_logic_vector(41 downto 0);
-  variable mul_rhs : std_logic_vector(41 downto 0);
   variable add_res : std_logic_vector(41 downto 0);
 begin
-  mul_lhs := (rcc_taps_lhs(output_index) * current(31 downto 10));
-  mul_rhs := (rcc_taps_rhs(output_index) * previous(31 downto 10));
   add_res := (mul_lhs + mul_rhs);
   
   -- Shift right by 10 and sign-extend.
@@ -182,9 +199,9 @@ begin
   next_output(21 downto 0) <= add_res(31 downto 10);
 end process;
 
-output_assign : process(next_output, is_ready, has_previous)
+output_assign : process(mul_valid, next_output)
 begin
-  if (is_ready and has_previous) then
+  if (mul_valid) then
     output_din <= next_output;
     output_write <= '1';
   else
